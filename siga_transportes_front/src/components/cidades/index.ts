@@ -1,0 +1,1 @@
+export { CadastroCidades } from './cadastro'

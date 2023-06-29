@@ -1,0 +1,62 @@
+git init
+
+git config --global user.name "Osmar Saraiva Jr"
+
+git config --global user.email "osmar.saraiva@gmail.com"
+
+git status
+
+git add . para serem versionados
+
+git commit -m "criação do projeto"
+
+git log - historico
+
+git remote add origin https://github.com/osmarsaraiva/siga_transportes_node_js (vincular projeto PC e Web)
+
+git push -u origin master
+
+
+
+
+______________________________________
+
+depois pode dar
+
+git add . para serem versionados
+
+git commit -m "mensagem"
+
+git push 
+
+git pull 
+Atualizar os arquivos no branch atual
+
+
+
+echo "# siga_transportes_js_node_post" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/osmarsaraiva/siga_transportes_js_node_post.git
+git push -u origin main
+
+
+git remote add origin https://github.com/osmarsaraiva/siga_transportes_js_node_post.git
+git branch -M main
+git push -u origin main
+
+
+
+git add .
+git commit -a -m "fdsfasf"
+git push origin main
+
+
+
+ini
+adiciona arquivos na pilha de commit
+faz o commit
+faz o Pull - companheiros 
+faz o push
