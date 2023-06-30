@@ -11,7 +11,13 @@ export const useCidadeService = () => {
         return response.data;
     }
 
+    const atualizar = async(cidade: Cidade) : Promise<void> => {
+        const url: string = `${resourceURL}/${cidade.id}`
+        await httpClient.put<Cidade>(url, cidade)
+    }
+
     return {
-        salvar
+        salvar,
+        atualizar
     }
 }

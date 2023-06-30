@@ -17,36 +17,51 @@ export const CadastroCidades: React.FC = () => {
 
     const submit = () => {
       const cidade: Cidade = { 
+        id,
         nome,
         estado,
         outro,
       }
+
+      if(id){
+
+        service
+            .atualizar(cidade)
+            .then(response => console.log("Atualizado!"))
+
+      }else{
+              
+
       service
         .salvar(cidade)
         .then(cidadeResposta => {
             setId(cidadeResposta.id)
             setCadastro(cidadeResposta.cadastro)
         })
+    
+      }
+    
     }
 
   return (
     <Layout titulo="Cadastros de Cidades">
-      <div className="columns">
-          <Input label = "Código: " 
-          columnClasses="is-half"
-          value={id}
-          id="inputId"  
-          disabled={true}  
-          />
+      {id &&
+          <div className="columns">
+              <Input label = "Código: " 
+              columnClasses="is-half"
+              value={id}
+              id="inputId"  
+              disabled={true}  
+              />
 
-          <Input label = "Data Cadastro: " 
-          columnClasses="is-half"
-          value={cadastro}
-          id="inputCadastro"    
-          disabled  
-          />
-
-     </div>
+              <Input label = "Data Cadastro: " 
+              columnClasses="is-half"
+              value={cadastro}
+              id="inputCadastro"    
+              disabled  
+              />
+        </div>
+    }
 
       <div className="columns">
 
@@ -84,7 +99,9 @@ export const CadastroCidades: React.FC = () => {
 
       <div className="field is-grouped">
         <div className="control is-link">
-          <button onClick={submit} className="button">Salvar</button>
+          <button onClick={submit} className="button">
+              { id? "Atualizar" : "Salvar"}
+          </button>
         </div>
 
         <div className="control">
@@ -94,3 +111,5 @@ export const CadastroCidades: React.FC = () => {
     </Layout>
   )
 }
+
+
