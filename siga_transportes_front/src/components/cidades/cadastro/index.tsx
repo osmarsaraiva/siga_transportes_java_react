@@ -11,6 +11,8 @@ export const CadastroCidades: React.FC = () => {
     const [ nome, setNome ] = useState<string>('')
     const [ estado, setEstado ] = useState<string>('')
     const [ outro, setOutro ] = useState<string>('')
+    const [ id, setId] = useState<string>('')
+    const [ cadastro, setCadastro ] = useState<string>('')
 
 
     const submit = () => {
@@ -21,11 +23,31 @@ export const CadastroCidades: React.FC = () => {
       }
       service
         .salvar(cidade)
-        .then(cidadeResposta => console.log(cidadeResposta))  
+        .then(cidadeResposta => {
+            setId(cidadeResposta.id)
+            setCadastro(cidadeResposta.cadastro)
+        })
     }
 
   return (
     <Layout titulo="Cadastros de Cidades">
+      <div className="columns">
+          <Input label = "Código: " 
+          columnClasses="is-half"
+          value={id}
+          id="inputId"  
+          disabled={true}  
+          />
+
+          <Input label = "Data Cadastro: " 
+          columnClasses="is-half"
+          value={cadastro}
+          id="inputCadastro"    
+          disabled  
+          />
+
+     </div>
+
       <div className="columns">
 
         <Input label = "Cidade: " 
