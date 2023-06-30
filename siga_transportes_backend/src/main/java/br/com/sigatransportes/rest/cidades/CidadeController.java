@@ -13,26 +13,18 @@ import br.com.sigatransportes.model.repository.CidadeRepository;
 @RestController //ligar api
 @RequestMapping("/api/cidades") //plural - mapeamento
 @CrossOrigin("*")
-public class CidadesController {
+public class CidadeController {
 	
 	
 	@Autowired
 	private CidadeRepository repository;
 	
 	@PostMapping
-	public CidadesFormRequest salvar( @RequestBody CidadesFormRequest cidade ) {
+	public CidadeFormRequest salvar( @RequestBody CidadeFormRequest cidade ) {
+		Cidade entidadeCidade = cidade.toModel();
+		repository.save(entidadeCidade);
+		return CidadeFormRequest.fromModel(entidadeCidade);
 		
-		Cidade entidadeCidade = new Cidade(
-				cidade.getNome(),
-				cidade.getEstado(),
-				cidade.getOutro()
-			);
-		
-	repository.save(entidadeCidade);
-	
-	System.out.println(entidadeCidade);
-	
-		return cidade;
 		
 	}
 
