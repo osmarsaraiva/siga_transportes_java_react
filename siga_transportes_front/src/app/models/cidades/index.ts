@@ -4,4 +4,5 @@ export interface Cidade {
 	estado?: string;
 	outro?: string;
 	cadastro?: string;
+
 }

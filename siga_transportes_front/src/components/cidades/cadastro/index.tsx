@@ -1,18 +1,26 @@
 import { useState } from 'react' //rock
-import { Layout, Input } from 'components'
+import { Layout, Input, Message } from 'components'
 import { useCidadeService } from 'app/services'
 import { Cidade } from '/app/models/cidades'
-import { parse } from 'path'
+import { Alert } from '@/components/common/message'
+import * as yup from 'yup'
+
+const validationSchema = yup.object().shape({
+    nome: yup.string().required(),
+    estado: yup.string().required(),
+    outro: yup.string().required(),
+})
+
 
 export const CadastroCidades: React.FC = () => {
     
     const service = useCidadeService()
-
     const [ nome, setNome ] = useState<string>('')
     const [ estado, setEstado ] = useState<string>('')
     const [ outro, setOutro ] = useState<string>('')
     const [ id, setId] = useState<string>('')
     const [ cadastro, setCadastro ] = useState<string>('')
+    const [ messages, setMessages ] = useState<Array<Alert>>([])
 
 
     const submit = () => {
@@ -23,28 +31,49 @@ export const CadastroCidades: React.FC = () => {
         outro,
       }
 
-      if(id){
-
+      validationSchema.validate(cidade).then(obj => {
+ 
+        if(id){
+  
         service
-            .atualizar(cidade)
-            .then(response => console.log("Atualizado!"))
-
-      }else{
-              
-
-      service
-        .salvar(cidade)
-        .then(cidadeResposta => {
-            setId(cidadeResposta.id)
-            setCadastro(cidadeResposta.cadastro)
-        })
-    
+          .atualizar(cidade)
+          .then(response => {
+              setMessages([{
+                tipo: "success", texto: "Local/Origem/Destino atualizado com sucesso!"
+              }])
+          })
+  
+        }else{
+          
+  
+        service
+  
+          .salvar(cidade)
+          .then(cidadeResposta => {
+              setId(cidadeResposta.id)
+              setCadastro(cidadeResposta.cadastro)
+              setMessages([{
+                tipo: "success", texto: "Local/Origem/Destino Salvo com sucesso!"
+              }])
+          })
+      
       }
+      }).catch(err => {
+        const field = err.path;
+        const message = err.message;
+
+        setMessages([
+          { tipo: "danger", field, texto: message }
+        ])
+        
+      })
+
+  }
     
-    }
 
   return (
-    <Layout titulo="Cadastros de Cidades">
+    <Layout titulo="Cadastros de Cidades" mensagens={messages}>
+     
       {id &&
           <div className="columns">
               <Input label = "Código: " 
@@ -89,7 +118,8 @@ export const CadastroCidades: React.FC = () => {
         onChange={setOutro}
         value={outro}
         id="inputOutro" 
-        placeholder="Digite o nome de outro Estado/Referência"     
+        placeholder="Digite o nome de outro Estado/Referência"  
+      
         />
 
     
