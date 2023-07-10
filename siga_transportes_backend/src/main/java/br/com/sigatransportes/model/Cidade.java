@@ -24,8 +24,8 @@ public class Cidade {
 	@Column(name = "estado", length = 100)
 	private String estado;
 	
-	@Column(name = "outro", length = 100)
-	private String outro;
+	@Column(name = "pais", length = 100)
+	private String pais;
 	
 	@Column(name = "data_cadastro")
 	private LocalDate dataCadastro;
@@ -37,20 +37,20 @@ public class Cidade {
 	}
 	
 
-	public Cidade(String nome, String estado, String outro) {
+	public Cidade(String nome, String estado, String pais) {
 		super();
 		this.nome = nome;
 		this.estado = estado;
-		this.outro = outro;
+		this.pais = pais;
 	}
 	
 	
-	public Cidade(Long id, String nome, String estado, String outro) {
+	public Cidade(Long id, String nome, String estado, String pais) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.estado = estado;
-		this.outro = outro;
+		this.pais = pais;
 	}
 
 
@@ -92,13 +92,13 @@ public class Cidade {
 	}
 
 
-	public String getOutro() {
-		return outro;
+	public String getPais() {
+		return pais;
 	}
 
 
-	public void setOutro(String outro) {
-		this.outro = outro;
+	public void setPais(String pais) {
+		this.pais = pais;
 	}
 
 	
@@ -118,7 +118,7 @@ public class Cidade {
 
 	@Override
 	public String toString() {
-		return "Cidade [id=" + id + ", cidade=" + nome + ", estado=" + estado + ", outro=" + outro + "]";
+		return "Cidade [id=" + id + ", cidade=" + nome + ", estado=" + estado + ", pais=" + pais + "]";
 	}
 	
 	

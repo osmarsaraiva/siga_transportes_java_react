@@ -11,7 +11,7 @@ public class CidadeFormRequest {
 	private Long id;
 	private String nome;
 	private String estado;
-	private String outro;
+	private String pais;
 	
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate cadastro;
@@ -23,19 +23,19 @@ public class CidadeFormRequest {
 	}
 	
 	
-	public CidadeFormRequest(Long id, String nome, String estado, String outro, LocalDate cadastro) {
+	public CidadeFormRequest(Long id, String nome, String estado, String pais, LocalDate cadastro) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.estado = estado;
-		this.outro = outro;
+		this.pais = pais;
 		this.cadastro = cadastro;
 	}
 
 
 
 	public Cidade toModel() {
-		return new Cidade(id, nome, estado, outro);
+		return new Cidade(id, nome, estado, pais);
 		
 	}	
 	
@@ -45,7 +45,7 @@ public class CidadeFormRequest {
 				cidade.getId(), 
 				cidade.getNome(), 
 				cidade.getEstado(), 
-				cidade.getOutro(),
+				cidade.getPais(),
 				cidade.getDataCadastro()
 		);
 		
@@ -65,11 +65,11 @@ public class CidadeFormRequest {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-	public String getOutro() {
-		return outro;
+	public String getPais() {
+		return pais;
 	}
-	public void setOutro(String outro) {
-		this.outro = outro;
+	public void setPais(String pais) {
+		this.pais = pais;
 	}
 	public Long getId() {
 		return id;
@@ -91,7 +91,7 @@ public class CidadeFormRequest {
 
 	@Override
 	public String toString() {
-		return "CidadesFormRequest [id=" + id + ", nome=" + nome + ", estado=" + estado + ", outro=" + outro + "]";
+		return "CidadesFormRequest [id=" + id + ", nome=" + nome + ", estado=" + estado + ", pais=" + pais + "]";
 	}
 	
 	

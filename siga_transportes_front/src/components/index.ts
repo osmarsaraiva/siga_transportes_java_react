@@ -1,4 +1,5 @@
 export { Layout } from './layout'
-export { CadastroCidades } from './cidades'
-export { Input, Message } from './common'
+export { CadastroCidades, ListagemCidades } from './cidades'
+export { Input, Message, Loader } from './common'
+
 

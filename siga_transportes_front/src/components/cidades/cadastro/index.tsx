@@ -4,12 +4,22 @@ import { useCidadeService } from 'app/services'
 import { Cidade } from '/app/models/cidades'
 import { Alert } from '@/components/common/message'
 import * as yup from 'yup'
+import Link from 'next/link'
+
+
+const msgCampoObrigatorio = "Campo Obrigatório";
 
 const validationSchema = yup.object().shape({
-    nome: yup.string().required(),
-    estado: yup.string().required(),
-    outro: yup.string().required(),
+    nome: yup.string().trim().required(msgCampoObrigatorio),
+    estado: yup.string().trim().required(msgCampoObrigatorio),
+    pais: yup.string().trim().required(msgCampoObrigatorio), 
 })
+
+interface FormErros {
+  nome?: string;
+  estado?: string;
+  pais?: string;
+}
 
 
 export const CadastroCidades: React.FC = () => {
@@ -17,10 +27,11 @@ export const CadastroCidades: React.FC = () => {
     const service = useCidadeService()
     const [ nome, setNome ] = useState<string>('')
     const [ estado, setEstado ] = useState<string>('')
-    const [ outro, setOutro ] = useState<string>('')
+    const [ pais, setPais ] = useState<string>('')
     const [ id, setId] = useState<string>('')
     const [ cadastro, setCadastro ] = useState<string>('')
     const [ messages, setMessages ] = useState<Array<Alert>>([])
+    const [ errors, setErrors ] = useState<FormErros>({})
 
 
     const submit = () => {
@@ -28,18 +39,19 @@ export const CadastroCidades: React.FC = () => {
         id,
         nome,
         estado,
-        outro,
+        pais,
       }
 
       validationSchema.validate(cidade).then(obj => {
- 
+        setErrors({})
+
         if(id){
   
         service
           .atualizar(cidade)
           .then(response => {
               setMessages([{
-                tipo: "success", texto: "Local/Origem/Destino atualizado com sucesso!"
+                tipo: "success", texto: "Localidade atualizada com sucesso!"
               }])
           })
   
@@ -53,7 +65,7 @@ export const CadastroCidades: React.FC = () => {
               setId(cidadeResposta.id)
               setCadastro(cidadeResposta.cadastro)
               setMessages([{
-                tipo: "success", texto: "Local/Origem/Destino Salvo com sucesso!"
+                tipo: "success", texto: "Localidade Salva com sucesso!"
               }])
           })
       
@@ -62,9 +74,13 @@ export const CadastroCidades: React.FC = () => {
         const field = err.path;
         const message = err.message;
 
-        setMessages([
-          { tipo: "danger", field, texto: message }
-        ])
+        setErrors({
+          [field]: message
+        })
+
+        //setMessages([
+         // { tipo: "danger", field, texto: message }
+        //])
         
       })
 
@@ -99,7 +115,9 @@ export const CadastroCidades: React.FC = () => {
         onChange={setNome}
         value={nome}
         id="inputNome" 
-        placeholder="Digite o nome da cidade"      
+        maxLength={40}
+        placeholder="Digite o nome da cidade"
+        error={errors.nome}  
         />
         
         <Input label = "Estado: " 
@@ -107,18 +125,20 @@ export const CadastroCidades: React.FC = () => {
         onChange={setEstado}
         value={estado}
         id="inputEstado" 
-        placeholder="Digite o nome do Estado em SIGLAS"     
+        placeholder="Digite o nome do Estado em SIGLAS"  
+        error={errors.estado}     
         />
 
       </div>
 
       <div className="columns">
-      <Input label = "Outro: " 
+      <Input label = "País: " 
         columnClasses="field column is-full"
-        onChange={setOutro}
-        value={outro}
-        id="inputOutro" 
-        placeholder="Digite o nome de outro Estado/Referência"  
+        onChange={setPais}
+        value={pais}
+        id="inputPais" 
+        placeholder="Digite o nome do país" 
+        error={errors.pais}   
       
         />
 
@@ -135,7 +155,9 @@ export const CadastroCidades: React.FC = () => {
         </div>
 
         <div className="control">
-          <button className="button">Voltar</button>
+            <Link href="/consultas/cidades">
+              <button className="button">Voltar</button>
+            </Link>
         </div>
       </div>
     </Layout>
